@@ -1,6 +1,7 @@
 import pygame
 
 import levels
+from easy_enemy import EasyEnemy
 
 pygame.font.init()
 pygame.display.set_caption("Tower Defense")
@@ -12,11 +13,13 @@ class Game:
 
         self.play = True
         self.FPS = 60
+        self.enemy = EasyEnemy(100)
 
         self.clock = pygame.time.Clock()
 
     def update_window(self):
         self.WIN.blit(levels.LEVEL_BG, (0, 0))
+        self.enemy.walk(self.WIN)
 
         pygame.display.update()
 
