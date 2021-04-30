@@ -13,13 +13,15 @@ class Game:
 
         self.play = True
         self.FPS = 60
-        self.enemy = EasyEnemy(100)
+        self.enemies = [EasyEnemy()]
 
         self.clock = pygame.time.Clock()
 
     def update_window(self):
         self.WIN.blit(levels.LEVEL_BG, (0, 0))
-        self.enemy.walk(self.WIN)
+        for enemy in self.enemies:
+            if enemy.walk:
+                enemy.walk_animation(self.WIN)
 
         pygame.display.update()
 
@@ -28,7 +30,14 @@ class Game:
             self.clock.tick(self.FPS)
             self.update_window()
 
+            for enemy in self.enemies:
+                if enemy.walk:
+                    enemy.move()
+
             # Checks for window close
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.play = False
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    pass
+
