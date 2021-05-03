@@ -13,7 +13,7 @@ class Game:
 
         self.play = True
         self.FPS = 60
-        self.enemies = [EasyEnemy()]
+        self.enemies = [EasyEnemy(speed=2)]
 
         self.clock = pygame.time.Clock()
 
@@ -31,8 +31,10 @@ class Game:
             self.update_window()
 
             for enemy in self.enemies:
-                if enemy.walk:
+                if enemy.walk and enemy.x - 20 < levels.WIDTH:
                     enemy.move()
+                elif enemy.x > levels.WIDTH:
+                    self.enemies.remove(enemy)
 
             # Checks for window close
             for event in pygame.event.get():

@@ -24,15 +24,21 @@ class Enemy:
         if self.path_index <= len(self.path):
             x2, y2 = self.path[self.path_index]
             x_diff, y_diff = ((x2 - self.x), (y2 - self.y))
-            if x_diff != 0 and x_diff > 0:
-                self.x += self.speed
-            elif x_diff != 0 and x_diff < 0:
-                self.x -= self.speed
-            elif y_diff != 0 and y_diff > 0:
-                self.y += self.speed
-            elif y_diff != 0 and y_diff < 0:
-                self.y -= self.speed
-            elif x_diff == 0 and y_diff == 0:
+            # Checks to see if enemy is within range of pos on path
+            if self.speed >= x_diff >= -self.speed and self.speed >= y_diff >= -self.speed:
                 self.path_index += 1
+            if abs(x_diff) > abs(y_diff):
+                if x_diff != 0 and x_diff > 0:
+                    self.x += self.speed
+                elif x_diff != 0 and x_diff < 0:
+                    self.x -= self.speed
+            elif abs(y_diff) > abs(x_diff):
+                if y_diff != 0 and y_diff > 0:
+                    self.y += self.speed
+                elif y_diff != 0 and y_diff < 0:
+                    self.y -= self.speed
+
+            # Temp For Debugging
+            # print(f"x diff: {x_diff}, y diff: {y_diff}")
 
 
