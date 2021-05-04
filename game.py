@@ -1,6 +1,9 @@
 import pygame
 
 import levels
+
+from Towers.basic_tower import BasicTower
+
 from Enemies.red_enemy import RedEnemy
 from Enemies.lightgreen_enemy import LightGreenEnemy
 from Enemies.silver_enemy import SilverEnemy
@@ -28,14 +31,19 @@ class Game:
             PurpleEnemy(speed=0.75), TanEnemy(speed=2.25), Boss(speed=1.5), LightGreyEnemy(speed=1.35),
             DarkGreenEnemy(speed=2.15), DarkGreyEnemy(speed=3)
             ]
+        self.towers = [BasicTower(350, 350), BasicTower(255, 255)]
 
         self.clock = pygame.time.Clock()
 
     def update_window(self):
         self.WIN.blit(levels.LEVEL_BG, (0, 0))
+        """
         for enemy in self.enemies:
             if enemy.walk:
                 enemy.walk_animation(self.WIN)
+        """
+        for tower in self.towers:
+            tower.draw(self.WIN)
 
         pygame.display.update()
 
@@ -49,6 +57,9 @@ class Game:
                     enemy.move()
                 elif enemy.x > levels.WIDTH:
                     self.enemies.remove(enemy)
+
+            for tower in self.towers:
+                tower.shoot()
 
             # Checks for window close
             for event in pygame.event.get():

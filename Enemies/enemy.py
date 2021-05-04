@@ -6,7 +6,6 @@ class Enemy:
     def __init__(self, health=100, speed=1):
         self.width, self.height = 75, 75
         self.health = health
-        self.enemy_img = None
         self.animation_count = 0
         self.path = LEVEL_PATH
         self.x, self.y = self.path[0]
