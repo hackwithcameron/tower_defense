@@ -40,5 +40,3 @@ class Enemy:
 
             # Temp For Debugging
             # print(f"x diff: {x_diff}, y diff: {y_diff}")
-
-

@@ -1,4 +1,5 @@
 import pygame
+import math
 
 
 class Tower:
@@ -7,19 +8,23 @@ class Tower:
         self.y = y
         self.base_width, self.base_height = 75, 75
         self.shooter_width, self.shooter_height = 65, 15
-        self.selected = False
+        self.selected = True
         self.health = health
+        self.range = [150, 250, 300]
+        self.level = 0
         self.base_img = None
         self.back_img = None
         self.front_img = None
+        self.projectile_img = None
         self.shooter_spacing = 2
         self.shooter_x_offset = -3
         self.shooter_y_offset = -5
         self.shooter_bottom = 5
         self.shooter_top = -20
         self.shooter_back_speed = 1
-        self.shooter_forward_speed = 3
+        self.shooter_forward_speed = 5
         self.shoot_projectile = False
+        self.target_in_range = False
         self.animation_count = 0
         self.cool_down = 1
 
@@ -30,6 +35,11 @@ class Tower:
         window.blit(pygame.transform.scale(self.base_img, (self.base_width, self.base_height)), (self.x - self.base_width//2, self.y - self.base_height//2))
         # Draws front shooter
         window.blit(pygame.transform.scale(self.front_img, (self.shooter_width, self.shooter_height)), (self.x - self.shooter_width // 2 + self.shooter_x_offset, self.y - self.shooter_height // 2 + self.shooter_y_offset))
+        # Draw tower range circle
+        if self.selected:
+            surface = pygame.Surface((self.range[self.level]*2, self.range[self.level]*2), pygame.SRCALPHA, 32)
+            pygame.draw.circle(surface, (0, 0, 0, 75), (self.range[self.level], self.range[self.level]), self.range[self.level], self.range[self.level])
+            window.blit(surface, (self.x - self.range[self.level], self.y - self.range[self.level]))
 
     def shoot(self):
         # load projectile
@@ -39,8 +49,21 @@ class Tower:
             if self.shooter_y_offset >= self.shooter_bottom:
                 self.shoot_projectile = True
         # shoot projectile
-        elif self.shoot_projectile:
+        elif self.shoot_projectile and self.target_in_range:
             self.shooter_y_offset -= self.shooter_forward_speed
             # Checks if shooter has hit end of shot
             if self.shooter_y_offset <= self.shooter_top:
                 self.shoot_projectile = False
+
+    def enemy_in_range(self, enemies):
+        self.target_in_range = False
+        in_range_enemies = []
+        for enemy in enemies:
+            x = enemy.x
+            y = enemy.y
+
+            # Gets distance to target enemy
+            dis_to_target = math.sqrt((self.x - x) ** 2 + (self.y - y) ** 2)
+            if dis_to_target < self.range[self.level]:
+                self.target_in_range = True
+                in_range_enemies.append(enemy)

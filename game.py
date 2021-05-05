@@ -5,7 +5,6 @@ import levels
 from Towers.towers import SpikeBallTower, FireTower, RockTower, BoulderTower
 from Enemies.enemies import RedEnemy, LightGreenEnemy, SilverEnemy, BrownGreenEnemy, PurpleEnemy, TanEnemy, Boss, LightGreyEnemy, DarkGreenEnemy, DarkGreyEnemy
 
-
 pygame.font.init()
 pygame.display.set_caption("Tower Defense")
 
@@ -17,23 +16,22 @@ class Game:
         self.play = True
         self.FPS = 60
         self.enemies = [
-            RedEnemy(speed=1), LightGreenEnemy(speed=2), SilverEnemy(speed=1.75), BrownGreenEnemy(speed=1.2),
-            PurpleEnemy(speed=0.75), TanEnemy(speed=2.25), Boss(speed=1.5), LightGreyEnemy(speed=1.35),
-            DarkGreenEnemy(speed=2.15), DarkGreyEnemy(speed=3)
+            RedEnemy(speed=2)
             ]
-        self.towers = [SpikeBallTower(350, 350), FireTower(255, 255), RockTower(450, 350), BoulderTower(550, 350)]
+        self.towers = [SpikeBallTower(250, 250)]
 
         self.clock = pygame.time.Clock()
 
     def update_window(self):
         self.WIN.blit(levels.LEVEL_BG, (0, 0))
-        """
+
+        for tower in self.towers:
+            tower.enemy_in_range(self.enemies)
+            tower.draw(self.WIN)
+
         for enemy in self.enemies:
             if enemy.walk:
                 enemy.walk_animation(self.WIN)
-        """
-        for tower in self.towers:
-            tower.draw(self.WIN)
 
         pygame.display.update()
 

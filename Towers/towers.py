@@ -21,8 +21,8 @@ class SpikeBallTower(Tower):
         "LVL_2": pygame.image.load(os.path.join("assets/stone-tower-game-assets/PNG/" "5.png"))
     }
 
-    def __init__(self, x, y, health=100):
-        super().__init__(x, y, health=100)
+    def __init__(self, x, y):
+        super().__init__(x, y, health=1000)
         self.base_img = self.BASE_IMG["LVL_1"]
         self.front_img = self.THROWER_FRONT_IMG["LVL_1"]
         self.back_img = self.THROWER_BACK_IMG["LVL_1"]
@@ -45,8 +45,8 @@ class FireTower(Tower):
         "LVL_2": pygame.image.load(os.path.join("assets/stone-tower-game-assets/PNG/" "11.png"))
     }
 
-    def __init__(self, x, y, health=100):
-        super().__init__(x, y, health=100)
+    def __init__(self, x, y):
+        super().__init__(x, y, health=1000)
         self.base_img = self.BASE_IMG["LVL_1"]
         self.front_img = self.THROWER_FRONT_IMG["LVL_1"]
         self.back_img = self.THROWER_BACK_IMG["LVL_1"]
@@ -72,8 +72,8 @@ class RockTower(Tower):
         "LVL_3": pygame.image.load(os.path.join("assets/stone-tower-game-assets/PNG/" "19.png"))
     }
 
-    def __init__(self, x, y, health=100):
-        super().__init__(x, y, health=100)
+    def __init__(self, x, y):
+        super().__init__(x, y, health=1000)
         self.base_img = self.BASE_IMG["LVL_1"]
         self.front_img = self.THROWER_FRONT_IMG["LVL_1"]
         self.back_img = self.THROWER_BACK_IMG["LVL_1"]
@@ -88,16 +88,17 @@ class BoulderTower(Tower):
 
     THROWER_IMG = {
         "LVL_1": pygame.image.load(os.path.join("assets/stone-tower-game-assets/PNG/" "28.png")),
-        "LVL_2": pygame.image.load(os.path.join("assets/stone-tower-game-assets/PNG/" "29.png")),
+        "LVL_2": pygame.image.load(os.path.join("assets/stone-tower-game-assets/PNG/" "27.png")),
     }
 
-    def __init__(self, x, y, health=100):
-        super().__init__(x, y, health=100)
+    def __init__(self, x, y):
+        super().__init__(x, y, health=1000)
         self.base_img = self.BASE_IMG["LVL_1"]
         self.front_img = self.THROWER_IMG["LVL_1"]
         self.back_img = self.THROWER_IMG["LVL_1"]
         self.x_spacing = 17
         self.shooter_y_offset = -45
+        self.shooter_x_offset = -3
         self.shooter_bottom = -26
         self.shooter_top = -50
         self.shooter_width, self.shooter_height = 35, 50
@@ -106,3 +107,5 @@ class BoulderTower(Tower):
         window.blit(pygame.transform.scale(self.front_img, (self.shooter_width, self.shooter_height)), (self.x - self.shooter_width // 2 + self.shooter_x_offset - self.x_spacing, self.y - self.shooter_height // 2 + self.shooter_y_offset))
         window.blit(pygame.transform.scale(self.front_img, (self.shooter_width, self.shooter_height)), (self.x - self.shooter_width // 2 + self.shooter_x_offset + self.x_spacing, self.y - self.shooter_height // 2 + self.shooter_y_offset))
         window.blit(pygame.transform.scale(self.base_img, (self.base_width, self.base_height)), (self.x - self.base_width//2, self.y - self.base_height//2))
+        pygame.draw.circle(window, (0, 255, 0), (self.x, self.y), self.range[0], 4)
+
