@@ -2,18 +2,8 @@ import pygame
 
 import levels
 
-from Towers.basic_tower import BasicTower
-
-from Enemies.red_enemy import RedEnemy
-from Enemies.lightgreen_enemy import LightGreenEnemy
-from Enemies.silver_enemy import SilverEnemy
-from Enemies.browngreen_enemy import BrownGreenEnemy
-from Enemies.purple_enemy import PurpleEnemy
-from Enemies.tan_enemy import TanEnemy
-from Enemies.boss import Boss
-from Enemies.lightgrey_enemy import LightGreyEnemy
-from Enemies.darkgreen_enemy import DarkGreenEnemy
-from Enemies.darkgrey_enemy import DarkGreyEnemy
+from Towers.towers import SpikeBallTower, FireTower, RockTower, BoulderTower
+from Enemies.enemies import RedEnemy, LightGreenEnemy, SilverEnemy, BrownGreenEnemy, PurpleEnemy, TanEnemy, Boss, LightGreyEnemy, DarkGreenEnemy, DarkGreyEnemy
 
 
 pygame.font.init()
@@ -31,7 +21,7 @@ class Game:
             PurpleEnemy(speed=0.75), TanEnemy(speed=2.25), Boss(speed=1.5), LightGreyEnemy(speed=1.35),
             DarkGreenEnemy(speed=2.15), DarkGreyEnemy(speed=3)
             ]
-        self.towers = [BasicTower(350, 350), BasicTower(255, 255)]
+        self.towers = [SpikeBallTower(350, 350), FireTower(255, 255), RockTower(450, 350), BoulderTower(550, 350)]
 
         self.clock = pygame.time.Clock()
 

@@ -12,6 +12,7 @@ class Tower:
         self.base_img = None
         self.back_img = None
         self.front_img = None
+        self.shooter_spacing = 2
         self.shooter_xoffset = -3
         self.shooter_yoffset = -5
         self.shooter_bottom = 5
@@ -24,7 +25,7 @@ class Tower:
 
     def draw(self, window):
         # Draws back shooter
-        window.blit(pygame.transform.scale(self.back_img, (self.shooter_width, self.shooter_height)), (self.x - self.shooter_width//2 + self.shooter_xoffset, (self.y - self.shooter_height//2) - self.shooter_height + self.shooter_yoffset + 2))
+        window.blit(pygame.transform.scale(self.back_img, (self.shooter_width, self.shooter_height)), (self.x - self.shooter_width//2 + self.shooter_xoffset, (self.y - self.shooter_height//2) - self.shooter_height + self.shooter_yoffset + self.shooter_spacing))
         # Draws base
         window.blit(pygame.transform.scale(self.base_img, (self.base_width, self.base_height)), (self.x - self.base_width//2, self.y - self.base_height//2))
         # Draws front shooter
