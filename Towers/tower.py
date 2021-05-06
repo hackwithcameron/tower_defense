@@ -36,10 +36,7 @@ class Tower:
         # Draws front shooter
         window.blit(pygame.transform.scale(self.front_img, (self.shooter_width, self.shooter_height)), (self.x - self.shooter_width // 2 + self.shooter_x_offset, self.y - self.shooter_height // 2 + self.shooter_y_offset))
         # Draw tower range circle
-        if self.selected:
-            surface = pygame.Surface((self.range[self.level]*2, self.range[self.level]*2), pygame.SRCALPHA, 32)
-            pygame.draw.circle(surface, (0, 0, 0, 75), (self.range[self.level], self.range[self.level]), self.range[self.level], self.range[self.level])
-            window.blit(surface, (self.x - self.range[self.level], self.y - self.range[self.level]))
+        self.draw_range_circle(window)
 
     def shoot(self):
         # load projectile
@@ -67,3 +64,48 @@ class Tower:
             if dis_to_target < self.range[self.level]:
                 self.target_in_range = True
                 in_range_enemies.append(enemy)
+
+    def upgrade(self, BASE_IMG, BACK_IMG, FRONT_IMG):
+        if self.level == 0:
+            self.level = 1
+            self.get_imgs(BASE_IMG, BACK_IMG, FRONT_IMG)
+        elif self.level == 1:
+            self.level = 2
+            self.get_imgs(BASE_IMG, BACK_IMG, FRONT_IMG)
+        else:
+            pass
+
+    def downgrade(self, BASE_IMG, BACK_IMG, FRONT_IMG):
+        if self.level == 2:
+            self.level = 1
+            self.get_imgs(BASE_IMG, BACK_IMG, FRONT_IMG)
+        elif self.level == 1:
+            self.level = 0
+            self.get_imgs(BASE_IMG, BACK_IMG, FRONT_IMG)
+        else:
+            pass
+
+    def get_imgs(self, BASE_IMG, THROWER_BACK_IMG, THROWER_FRONT_IMG):
+        if self.level == 0:
+            self.base_img = BASE_IMG["LVL_1"]
+            self.front_img = THROWER_FRONT_IMG["LVL_1"]
+            self.back_img = THROWER_BACK_IMG["LVL_1"]
+        elif self.level == 1:
+            self.base_img = BASE_IMG["LVL_2"]
+            if len(THROWER_BACK_IMG) > 2:
+                self.front_img = THROWER_FRONT_IMG["LVL_2"]
+                self.back_img = THROWER_BACK_IMG["LVL_2"]
+            else:
+                self.front_img = THROWER_FRONT_IMG["LVL_1"]
+                self.back_img = THROWER_BACK_IMG["LVL_1"]
+        elif self.level == 2:
+            self.base_img = BASE_IMG["LVL_3"]
+            self.front_img = THROWER_FRONT_IMG["LVL_3"]
+            self.back_img = THROWER_BACK_IMG["LVL_3"]
+
+    def draw_range_circle(self, window):
+        # Draw tower range circle
+        if self.selected:
+            surface = pygame.Surface((self.range[self.level]*2, self.range[self.level]*2), pygame.SRCALPHA, 32)
+            pygame.draw.circle(surface, (0, 0, 0, 75), (self.range[self.level], self.range[self.level]), self.range[self.level], self.range[self.level])
+            window.blit(surface, (self.x - self.range[self.level], self.y - self.range[self.level]))

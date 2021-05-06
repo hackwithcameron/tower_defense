@@ -54,5 +54,15 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.play = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    pass
+                    for tower in self.towers:
+                        tower.upgrade_tower()
+
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_u]:
+                for tower in self.towers:
+                    tower.upgrade_tower()
+            if keys[pygame.K_d]:
+                for tower in self.towers:
+                    tower.downgrade_tower()
+
 
