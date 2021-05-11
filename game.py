@@ -1,7 +1,6 @@
 import pygame
 
 import levels
-
 from Towers.towers import SpikeBallTower, FireTower, RockTower, BoulderTower
 from Enemies.enemies import RedEnemy, LightGreenEnemy, SilverEnemy, BrownGreenEnemy, PurpleEnemy, TanEnemy, Boss, LightGreyEnemy, DarkGreenEnemy, DarkGreyEnemy
 
@@ -16,7 +15,7 @@ class Game:
         self.play = True
         self.FPS = 60
         self.enemies = [
-            RedEnemy(speed=2)
+            RedEnemy(speed=2), Boss(speed=1)
             ]
         self.towers = [SpikeBallTower(250, 250)]
 
@@ -32,6 +31,10 @@ class Game:
         for enemy in self.enemies:
             if enemy.walk:
                 enemy.walk_animation(self.WIN)
+            elif enemy.died:
+                enemy.die_animation(self.WIN)
+            else:
+                self.enemies.remove(enemy)
 
         pygame.display.update()
 
@@ -54,8 +57,15 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.play = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
+                    # Test tower upgrades
                     for tower in self.towers:
                         tower.upgrade_tower()
+                    # Test enemy health bar
+                    for enemy in self.enemies:
+                        enemy.health -= 12
+                        if enemy.health < 0:
+                            enemy.walk = False
+                            enemy.died = True
 
             keys = pygame.key.get_pressed()
             if keys[pygame.K_u]:

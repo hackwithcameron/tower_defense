@@ -125,7 +125,8 @@ class BoulderTower(Tower):
         window.blit(pygame.transform.scale(self.front_img, (self.shooter_width, self.shooter_height)), (self.x - self.shooter_width // 2 + self.shooter_x_offset - self.x_spacing, self.y - self.shooter_height // 2 + self.shooter_y_offset))
         window.blit(pygame.transform.scale(self.front_img, (self.shooter_width, self.shooter_height)), (self.x - self.shooter_width // 2 + self.shooter_x_offset + self.x_spacing, self.y - self.shooter_height // 2 + self.shooter_y_offset))
         window.blit(pygame.transform.scale(self.base_img, (self.base_width, self.base_height)), (self.x - self.base_width//2, self.y - self.base_height//2))
-        self.draw_range_circle(window)
+        if self.selected:
+            self.draw_range_circle(window)
 
     def upgrade_tower(self):
         super().upgrade(self.BASE_IMG, self.THROWER_IMG, self.THROWER_IMG)

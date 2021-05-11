@@ -14,13 +14,13 @@ class RedEnemy(Enemy):
 
     def __init__(self, health=100, speed=1):
         super().__init__(health, speed)
-        self.walk = True
 
     def walk_animation(self, window):
         self.draw(window, self.WALK_IMG)
 
     def die_animation(self, window):
         self.draw(window, self.DIE_IMG)
+        self.die(self.DIE_IMG)
 
 
 class LightGreenEnemy(Enemy):
@@ -52,13 +52,13 @@ class LightGreyEnemy(Enemy):
 
     def __init__(self, health=100, speed=1):
         super().__init__(health, speed)
-        self.walk = True
 
     def walk_animation(self, window):
         self.draw(window, self.WALK_IMG)
 
     def die_animation(self, window):
         self.draw(window, self.DIE_IMG)
+        self.die(self.DIE_IMG)
 
 
 class PurpleEnemy(Enemy):
@@ -71,7 +71,6 @@ class PurpleEnemy(Enemy):
 
     def __init__(self, health=100, speed=1):
         super().__init__(health, speed)
-        self.walk = True
 
     def walk_animation(self, window):
         self.draw(window, self.WALK_IMG)
@@ -90,13 +89,13 @@ class SilverEnemy(Enemy):
 
     def __init__(self, health=100, speed=1):
         super().__init__(health, speed)
-        self.walk = True
 
     def walk_animation(self, window):
         self.draw(window, self.WALK_IMG)
 
     def die_animation(self, window):
         self.draw(window, self.DIE_IMG)
+        self.die(self.DIE_IMG)
 
 
 class TanEnemy(Enemy):
@@ -116,6 +115,7 @@ class TanEnemy(Enemy):
 
     def die_animation(self, window):
         self.draw(window, self.DIE_IMG)
+        self.die(self.DIE_IMG)
 
 
 class DarkGreyEnemy(Enemy):
@@ -128,13 +128,13 @@ class DarkGreyEnemy(Enemy):
 
     def __init__(self, health=100, speed=1):
         super().__init__(health, speed)
-        self.walk = True
 
     def walk_animation(self, window):
         self.draw(window, self.WALK_IMG)
 
     def die_animation(self, window):
         self.draw(window, self.DIE_IMG)
+        self.die(self.DIE_IMG)
 
 
 class DarkGreenEnemy(Enemy):
@@ -166,13 +166,13 @@ class BrownGreenEnemy(Enemy):
 
     def __init__(self, health=100, speed=1):
         super().__init__(health, speed)
-        self.walk = True
 
     def walk_animation(self, window):
         self.draw(window, self.WALK_IMG)
 
     def die_animation(self, window):
         self.draw(window, self.DIE_IMG)
+        self.die(self.DIE_IMG)
 
 
 class Boss(Enemy):
@@ -183,14 +183,14 @@ class Boss(Enemy):
         "assets/monster-enemy-sprites/PNG/Boss/" "7_enemies_1_die_00" + str(x) + ".png") if x < 10 else os.path.join(
         "assets/monster-enemy-sprites/PNG/Boss/" "7_enemies_1_die_0" + str(x) + ".png")) for x in range(0, 19)]
 
-    def __init__(self, health=100, speed=1):
+    def __init__(self, health=200, speed=1):
         super().__init__(health, speed)
         self.height = 110
         self.width = 110
-        self.walk = True
 
     def walk_animation(self, window):
         self.draw(window, self.WALK_IMG)
 
     def die_animation(self, window):
         self.draw(window, self.DIE_IMG)
+        self.die(self.DIE_IMG)
