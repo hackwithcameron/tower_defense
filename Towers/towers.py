@@ -21,11 +21,14 @@ class SpikeBallTower(Tower):
         "LVL_3": pygame.image.load(os.path.join("assets/stone-tower-game-assets/PNG/" "5.png"))
     }
 
+    PROJECTILE_IMG = pygame.image.load(os.path.join("assets/stone-tower-game-assets/PNG/", "49.png"))
+
     def __init__(self, x, y):
-        super().__init__(x, y, health=1000)
+        super().__init__(x, y)
         self.base_img = self.BASE_IMG["LVL_1"]
         self.front_img = self.THROWER_FRONT_IMG["LVL_1"]
         self.back_img = self.THROWER_BACK_IMG["LVL_1"]
+        self.projectile_img = self.PROJECTILE_IMG
 
     def upgrade_tower(self):
         super().upgrade(self.BASE_IMG, self.THROWER_BACK_IMG, self.THROWER_FRONT_IMG)
@@ -51,12 +54,15 @@ class FireTower(Tower):
         "LVL_3": pygame.image.load(os.path.join("assets/stone-tower-game-assets/PNG/" "11.png"))
     }
 
+    PROJECTILE_IMG = pygame.image.load(os.path.join("assets/stone-tower-game-assets/PNG/", "51.png"))
+
     def __init__(self, x, y):
-        super().__init__(x, y, health=1000)
+        super().__init__(x, y)
         self.base_img = self.BASE_IMG["LVL_1"]
         self.front_img = self.THROWER_FRONT_IMG["LVL_1"]
         self.back_img = self.THROWER_BACK_IMG["LVL_1"]
         self.shooter_spacing = 9
+        self.projectile_img = self.PROJECTILE_IMG
 
     def upgrade_tower(self):
         super().upgrade(self.BASE_IMG, self.THROWER_BACK_IMG, self.THROWER_FRONT_IMG)
@@ -84,11 +90,14 @@ class RockTower(Tower):
         "LVL_3": pygame.image.load(os.path.join("assets/stone-tower-game-assets/PNG/" "19.png"))
     }
 
+    PROJECTILE_IMG = pygame.image.load(os.path.join("assets/stone-tower-game-assets/PNG/", "50.png"))
+
     def __init__(self, x, y):
-        super().__init__(x, y, health=1000)
+        super().__init__(x, y)
         self.base_img = self.BASE_IMG["LVL_1"]
         self.front_img = self.THROWER_FRONT_IMG["LVL_1"]
         self.back_img = self.THROWER_BACK_IMG["LVL_1"]
+        self.projectile_img = self.PROJECTILE_IMG
 
     def upgrade_tower(self):
         super().upgrade(self.BASE_IMG, self.THROWER_BACK_IMG, self.THROWER_FRONT_IMG)
@@ -109,8 +118,10 @@ class BoulderTower(Tower):
         "LVL_3": pygame.image.load(os.path.join("assets/stone-tower-game-assets/PNG/" "27.png")),
     }
 
+    PROJECTILE_IMG = pygame.image.load(os.path.join("assets/stone-tower-game-assets/PNG/", "52.png"))
+
     def __init__(self, x, y):
-        super().__init__(x, y, health=1000)
+        super().__init__(x, y)
         self.base_img = self.BASE_IMG["LVL_1"]
         self.front_img = self.THROWER_IMG["LVL_1"]
         self.back_img = self.THROWER_IMG["LVL_1"]
@@ -120,6 +131,7 @@ class BoulderTower(Tower):
         self.shooter_bottom = -26
         self.shooter_top = -50
         self.shooter_width, self.shooter_height = 35, 50
+        self.projectile_img = self.PROJECTILE_IMG
 
     def draw(self, window):
         window.blit(pygame.transform.scale(self.front_img, (self.shooter_width, self.shooter_height)), (self.x - self.shooter_width // 2 + self.shooter_x_offset - self.x_spacing, self.y - self.shooter_height // 2 + self.shooter_y_offset))

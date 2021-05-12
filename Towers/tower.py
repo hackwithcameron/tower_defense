@@ -1,21 +1,24 @@
 import pygame
 import math
 
+from .projectile import Projectile
+
 
 class Tower:
-    def __init__(self, x, y, health=1000):
+    def __init__(self, x, y):
         self.x = x
         self.y = y
         self.base_width, self.base_height = 75, 75
         self.shooter_width, self.shooter_height = 65, 15
-        self.selected = True
-        self.health = health
+        self.selected = False
         self.range = [150, 250, 300]
         self.level = 0
         self.base_img = None
         self.back_img = None
         self.front_img = None
         self.projectile_img = None
+        self.projectiles = []
+        # Shooter adjustments START
         self.shooter_spacing = 2
         self.shooter_x_offset = -3
         self.shooter_y_offset = -5
@@ -23,10 +26,11 @@ class Tower:
         self.shooter_top = -20
         self.shooter_back_speed = 1
         self.shooter_forward_speed = 5
+        # Shooter adjustments END
         self.shoot_projectile = False
         self.target_in_range = False
         self.animation_count = 0
-        self.cool_down = 1
+        self.cool_down = 0
 
     def draw(self, window):
         # Draws back shooter
@@ -38,6 +42,8 @@ class Tower:
         # Draw tower range circle if selected
         if self.selected:
             self.draw_range_circle(window)
+        for projectile in self.projectiles:
+            projectile.draw_projectile(window, projectile)
 
     def shoot(self):
         # load projectile
@@ -45,10 +51,12 @@ class Tower:
             self.shooter_y_offset += self.shooter_back_speed
             # Checks if shooter is at full power
             if self.shooter_y_offset >= self.shooter_bottom:
+                self.load_projectile()
                 self.shoot_projectile = True
         # shoot projectile
         elif self.shoot_projectile and self.target_in_range:
             self.shooter_y_offset -= self.shooter_forward_speed
+            self.fire_projectile()
             # Checks if shooter has hit end of shot
             if self.shooter_y_offset <= self.shooter_top:
                 self.shoot_projectile = False
@@ -110,3 +118,11 @@ class Tower:
             surface = pygame.Surface((self.range[self.level]*2, self.range[self.level]*2), pygame.SRCALPHA, 32)
             pygame.draw.circle(surface, (0, 0, 0, 75), (self.range[self.level], self.range[self.level]), self.range[self.level], self.range[self.level])
             window.blit(surface, (self.x - self.range[self.level], self.y - self.range[self.level]))
+
+    def load_projectile(self):
+        projectile = Projectile(self.x, self.y, self.projectile_img)
+        self.projectiles.append(projectile)
+
+    def fire_projectile(self):
+        for projectile in self.projectiles:
+            projectile.projectile_y -= self.shooter_forward_speed
