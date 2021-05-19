@@ -139,6 +139,8 @@ class BoulderTower(Tower):
         window.blit(pygame.transform.scale(self.base_img, (self.base_width, self.base_height)), (self.x - self.base_width//2, self.y - self.base_height//2))
         if self.selected:
             self.draw_range_circle(window)
+        for projectile in self.projectiles:
+            projectile.draw_projectile(window, projectile)
 
     def upgrade_tower(self):
         super().upgrade(self.BASE_IMG, self.THROWER_IMG, self.THROWER_IMG)

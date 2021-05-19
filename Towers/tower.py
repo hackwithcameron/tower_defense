@@ -18,7 +18,7 @@ class Tower:
         self.front_img = None
         self.projectile_img = None
         self.projectiles = []
-        # Shooter adjustments START
+        # Shooter adjustments for drawing START
         self.shooter_spacing = 2
         self.shooter_x_offset = -3
         self.shooter_y_offset = -5
@@ -29,6 +29,7 @@ class Tower:
         # Shooter adjustments END
         self.shoot_projectile = False
         self.target_in_range = False
+        self.in_range_enemies = []
         self.animation_count = 0
         self.cool_down = 0
 
@@ -42,8 +43,12 @@ class Tower:
         # Draw tower range circle if selected
         if self.selected:
             self.draw_range_circle(window)
+        # Draw the projectiles for each tower
         for projectile in self.projectiles:
             projectile.draw_projectile(window, projectile)
+            projectile.projectile_move(self.in_range_enemies, self.x, self.y + self.shooter_top)
+            if projectile.t > 1:  # Checks if projectile is at end of arc and removes projectile from list
+                self.projectiles.remove(projectile)
 
     def shoot(self):
         # load projectile
@@ -60,10 +65,11 @@ class Tower:
             # Checks if shooter has hit end of shot
             if self.shooter_y_offset <= self.shooter_top:
                 self.shoot_projectile = False
+                self.fire_projectile()
 
     def enemy_in_range(self, enemies):
         self.target_in_range = False
-        in_range_enemies = []
+        self.in_range_enemies = []
         for enemy in enemies:
             x = enemy.x
             y = enemy.y
@@ -72,7 +78,7 @@ class Tower:
             dis_to_target = math.sqrt((self.x - x) ** 2 + (self.y - y) ** 2)
             if dis_to_target < self.range[self.level]:
                 self.target_in_range = True
-                in_range_enemies.append(enemy)
+                self.in_range_enemies.append(enemy)
 
     def upgrade(self, BASE_IMG, BACK_IMG, FRONT_IMG):
         if self.level == 0:
@@ -125,4 +131,7 @@ class Tower:
 
     def fire_projectile(self):
         for projectile in self.projectiles:
-            projectile.projectile_y -= self.shooter_forward_speed
+            if not projectile.fired and self.shoot_projectile:
+                projectile.projectile_y -= self.shooter_forward_speed
+            if not self.shoot_projectile:
+                projectile.fired = True

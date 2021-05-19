@@ -15,9 +15,9 @@ class Game:
         self.play = True
         self.FPS = 60
         self.enemies = [
-            RedEnemy(speed=2), Boss(speed=1)
+            RedEnemy(speed=2)
             ]
-        self.towers = [SpikeBallTower(250, 250)]
+        self.towers = [SpikeBallTower(250, 250), FireTower(300, 500)]
 
         self.clock = pygame.time.Clock()
 
@@ -74,5 +74,6 @@ class Game:
             if keys[pygame.K_d]:
                 for tower in self.towers:
                     tower.downgrade_tower()
+
 
 
